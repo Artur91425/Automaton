@@ -170,7 +170,7 @@ end
 
 local color, name
 function Automaton_Sell:ProcessLink(link)
-	for color, name in string.gmatch(link, "(|c%x+)|Hitem:.+|h%[(.-)%]|h|r") do
+	for color, name in string.gfind(link, "(|c%x+)|Hitem:.+|h%[(.-)%]|h|r") do
 		for k,v in pairs(self.db.profile.ignore) do
 			if (name == v) or (link == v) then
 				self:Debug("ProcessLink: %s", name)
