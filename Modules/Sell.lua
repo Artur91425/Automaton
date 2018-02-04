@@ -153,13 +153,17 @@ end
 
 local bag, slot
 function Automaton_Sell:MERCHANT_SHOW()
+	local oldTime, newTime
 	for bag = 0, 4 do
 		if GetContainerNumSlots(bag) > 0 then
 			for slot = 1, GetContainerNumSlots(bag) do
+				oldTime = GetTime()
 				local texture, itemCount, locked, quality = GetContainerItemInfo(bag, slot)
 				if quality then
 					local linkcolor = self:ProcessLink(GetContainerItemLink(bag, slot))
 					if linkcolor == 1 and not self:IsDebugging() then
+						newTime = GetTime()
+						while newTime - oldTime < .01 do newTime = GetTime() end -- item sale every 0.01 second
 						UseContainerItem(bag, slot)
 					end
 				end
